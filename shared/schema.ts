@@ -36,3 +36,21 @@ export const insertSignupSchema = createInsertSchema(signups).omit({
 
 export type InsertSignup = z.infer<typeof insertSignupSchema>;
 export type Signup = typeof signups.$inferSelect;
+
+export const catMugshots = pgTable("cat_mugshots", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  catName: text("cat_name").notNull(),
+  crime: text("crime").notNull(),
+  sentence: text("sentence").notNull(),
+  submitterName: text("submitter_name").notNull(),
+  submitterEmail: text("submitter_email").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertCatMugshotSchema = createInsertSchema(catMugshots).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertCatMugshot = z.infer<typeof insertCatMugshotSchema>;
+export type CatMugshot = typeof catMugshots.$inferSelect;
