@@ -1159,6 +1159,7 @@ function Footer() {
             <h4 className="font-semibold mb-4">Get Involved</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><a href="#join" className="hover:text-foreground transition-colors">Join the Movement</a></li>
+              <li><a href="/the-hub" className="hover:text-foreground transition-colors">The Hub</a></li>
               <li><a href="mailto:founders@vetvanfleet.org" className="hover:text-foreground transition-colors">Contact Us</a></li>
               <li>
                 <a 
