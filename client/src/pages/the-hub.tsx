@@ -38,9 +38,9 @@ const createRepoSchema = z.object({
   token: z
     .string()
     .min(1, "Personal access token is required")
-    .regex(/^(gh[ps]_|github_pat_)/, {
+    .regex(/^(ghp_|github_pat_)/, {
       message:
-        "Token must be a valid GitHub personal access token (starts with ghp_, ghs_, or github_pat_)",
+        "Token must be a valid GitHub personal access token (starts with ghp_ or github_pat_)",
     }),
   description: z.string().optional(),
   isPrivate: z.boolean().default(false),
@@ -111,9 +111,10 @@ export default function TheHub() {
         description: `"${response.data.full_name}" is ready on GitHub.`,
       });
     } catch (err: unknown) {
+      const octokitError = err as { status?: number; message?: string };
       const message =
-        err instanceof Error ? err.message : "An unexpected error occurred.";
-      const isConflict = message.includes("422") || message.includes("name already exists");
+        octokitError.message ?? (err instanceof Error ? err.message : "An unexpected error occurred.");
+      const isConflict = octokitError.status === 422;
       toast({
         title: isConflict ? "Repository already exists" : "Failed to create repository",
         description: isConflict
