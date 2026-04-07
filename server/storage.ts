@@ -1,4 +1,4 @@
-import { users, signups, type User, type InsertUser, type Signup, type InsertSignup } from "@shared/schema";
+import { users, signups, catMugshots, type User, type InsertUser, type Signup, type InsertSignup, type CatMugshot, type InsertCatMugshot } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
 
@@ -8,6 +8,8 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   createSignup(signup: InsertSignup): Promise<Signup>;
   getSignups(): Promise<Signup[]>;
+  createCatMugshot(mugshot: InsertCatMugshot): Promise<CatMugshot>;
+  getCatMugshots(): Promise<CatMugshot[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -39,6 +41,18 @@ export class DatabaseStorage implements IStorage {
 
   async getSignups(): Promise<Signup[]> {
     return await db.select().from(signups).orderBy(signups.createdAt);
+  }
+
+  async createCatMugshot(insertMugshot: InsertCatMugshot): Promise<CatMugshot> {
+    const [mugshot] = await db
+      .insert(catMugshots)
+      .values(insertMugshot)
+      .returning();
+    return mugshot;
+  }
+
+  async getCatMugshots(): Promise<CatMugshot[]> {
+    return await db.select().from(catMugshots).orderBy(catMugshots.createdAt);
   }
 }
 

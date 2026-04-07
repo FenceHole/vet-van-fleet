@@ -1170,6 +1170,15 @@ function Footer() {
                   VetVanFleet.com <ExternalLink className="h-3 w-3" />
                 </a>
               </li>
+              <li>
+                <a 
+                  href="/catmugshots"
+                  className="hover:text-foreground transition-colors flex items-center gap-1"
+                  data-testid="link-cat-mugshots"
+                >
+                  CatMugshots.com <ExternalLink className="h-3 w-3" />
+                </a>
+              </li>
             </ul>
           </div>
         </div>
